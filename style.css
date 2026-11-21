@@ -264,6 +264,12 @@ input {
   transform: scale(0.985);
 }
 
+.btn:disabled,
+.btn[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .primary {
   background: var(--red);
   color: #ffffff;
@@ -635,6 +641,73 @@ input {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   flex-shrink: 0;
+}
+
+/* Recharge Coin Packs 3x2 Grid (Image 1 replica) */
+.recharge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.recharge-pack {
+  background: #f1f2f5;
+  border-radius: 10px;
+  padding: 12px 6px;
+  border: 1.5px solid transparent;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  box-sizing: border-box;
+}
+
+.recharge-pack:active {
+  transform: scale(0.975);
+}
+
+.recharge-pack.active {
+  border-color: var(--red);
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(254, 44, 85, 0.15);
+}
+
+.recharge-pack-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.recharge-pack-coins {
+  font-size: 17px;
+  font-weight: 700;
+  color: #161823;
+  line-height: 1.2;
+}
+
+.recharge-pack-price {
+  font-size: 13px;
+  color: #73747b;
+  margin-top: 4px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.recharge-custom-pack {
+  justify-content: center;
+}
+
+.recharge-custom-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #161823;
 }
 
 /* Packs & Custom */
@@ -1682,3 +1755,420 @@ input {
     font-size: 24px;
   }
 }
+
+/* ==========================================================================
+   TikTok LIVE Rewards Dark Container Card (Image replica)
+   ========================================================================== */
+.rewards-card-container {
+  margin: 14px 14px 6px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rewards-dark-card {
+  background: #1c1d21;
+  padding: 20px 20px 22px;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.rewards-watermark {
+  position: absolute;
+  right: -15px;
+  top: -8px;
+  width: 135px;
+  height: 155px;
+  opacity: 0.045;
+  pointer-events: none;
+  fill: #ffffff;
+}
+
+/* Profile & Level 50 Apex Section (Image 1 replica) */
+.rewards-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.rewards-profile-avatar-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  background: #2a2b30;
+}
+
+.rewards-profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rewards-profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rewards-profile-name {
+  font-size: 19px;
+  font-weight: 750;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rewards-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+  border-radius: 999px;
+  padding: 3px 10px 3px 6px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(126, 34, 206, 0.45);
+  width: fit-content;
+}
+
+.rewards-level-badge-num {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.rewards-card-header {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #a0a2a8;
+  margin-bottom: 8px;
+  letter-spacing: -0.1px;
+}
+
+.rewards-amount-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.rewards-amount-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.rewards-cur-badge {
+  font-size: clamp(28px, 8.2vw, 38px);
+  font-weight: 850;
+  color: #ffffff;
+  letter-spacing: -0.4px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.rewards-big-num {
+  font-size: clamp(28px, 8.2vw, 38px);
+  font-weight: 850;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: visible;
+  transition: color 0.4s ease;
+}
+
+.rewards-card-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.09);
+  margin: 24px 0 18px;
+}
+
+/* Full-width spacious Coins Section */
+.rewards-coins-section {
+  cursor: pointer;
+  padding: 8px 0 4px;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.15s ease;
+}
+
+.rewards-coins-section:active {
+  opacity: 0.85;
+}
+
+.rewards-coins-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #a0a2a8;
+}
+
+.rewards-coins-head .chevron {
+  color: #717379;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.rewards-coins-val {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.rewards-coins-count {
+  font-size: clamp(22px, 5.5vw, 26px);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+/* Experience Level Row & Progress Bar */
+.rewards-level-card {
+  background: #ffffff;
+  padding: 12px 18px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.rewards-level-card:active {
+  background: #f8f9fb;
+}
+
+.rewards-level-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rewards-level-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rewards-diamond-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.rewards-diamond-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.rewards-diamond-num {
+  font-size: 15px;
+  font-weight: 700;
+  color: #161823;
+}
+
+.rewards-level-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4f515a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rewards-level-chevron {
+  color: #8b8d96;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rewards-level-bar-track {
+  height: 4px;
+  background: #edf0f5;
+  border-radius: 999px;
+  margin-top: 9px;
+  overflow: hidden;
+}
+
+.rewards-level-bar-fill {
+  height: 100%;
+  width: 34%;
+  background: linear-gradient(90deg, #3875f6, #60a5fa);
+  border-radius: 999px;
+}
+
+/* Responsive adjustments */
+@media (min-width: 600px) {
+  .rewards-card-container {
+    margin: 16px 20px 8px;
+  }
+  .rewards-big-num {
+    font-size: 38px;
+  }
+  .rewards-cur-badge {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 380px) {
+  .rewards-card-container {
+    margin: 10px 10px 4px;
+  }
+  .rewards-dark-card {
+    padding: 16px 14px 18px;
+  }
+  .rewards-big-num {
+    font-size: 28px;
+  }
+  .rewards-cur-badge {
+    font-size: 28px;
+  }
+}
+
+/* ==========================================================================
+   ✨ Chat & Payment Theme Texture (Revolut Luxury Tiers)
+   ========================================================================== */
+.toolbox-head-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.toolbox-tier-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: -0.1px;
+}
+
+.theme-grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.theme-card-item {
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 10px 8px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.theme-card-item:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.theme-card-item.active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1.5px #3b82f6, 0 4px 14px rgba(59, 130, 246, 0.18);
+}
+
+.theme-swatch-box {
+  width: 100%;
+  height: 58px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 2px 6px rgba(0, 0, 0, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-check-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.theme-card-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.theme-card-sub {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #6b7280;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Subtle luxury sparkle texture for glitter theme cards */
+.has-glitter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 80px 60px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 150px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 220px 70px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 280px 25px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 320px 90px, rgba(255,255,255,0.9), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 360px 140px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+

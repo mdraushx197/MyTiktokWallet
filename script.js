@@ -24,6 +24,7 @@ const state = {
     transferLabel: 'LIVE rewards transfer to TikTok',
     currency: 'USD', // 'USD' | 'EUR' | 'TRY' | 'GBP' | 'BRL'
     followerTextSize: 2, // 1 to 6
+    theme: 'glitter-shimmer',
     paymentLoading: {
       enabled: true,
       style: 'dots', // 'classic' | 'modern' | 'ring' | 'dots' | 'squares'
@@ -274,6 +275,22 @@ const typoAliases = {
   'mcdonald': 'mcdonalds'
 };
 
+const LUXURY_THEMES = [
+  { id: 'metal-gold', name: 'Metal Gold', subtitle: 'Classic Gold', gradient: 'linear-gradient(135deg, #e67e00 0%, #b85d00 45%, #6d3200 100%)', cardGradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 35%, #92400e 75%, #451a03 100%)', isGlitter: false },
+  { id: 'ultra-platinum', name: 'Ultra Platinum', subtitle: 'Ultra Mirror', gradient: 'linear-gradient(135deg, #e2e8f0 0%, #94a3b8 35%, #475569 70%, #1e293b 100%)', cardGradient: 'linear-gradient(135deg, #cbd5e1 0%, #94a3b8 30%, #334155 70%, #0f172a 100%)', isGlitter: false },
+  { id: 'rose-gold', name: 'Rose Gold', subtitle: 'Rose Metal', gradient: 'linear-gradient(135deg, #fb7185 0%, #e11d48 40%, #881337 75%, #4c0519 100%)', cardGradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 35%, #881337 75%, #4c0519 100%)', isGlitter: false },
+  { id: 'space-grey', name: 'Space Grey', subtitle: 'Titanium', gradient: 'linear-gradient(135deg, #64748b 0%, #334155 45%, #1e293b 80%, #0f172a 100%)', cardGradient: 'linear-gradient(135deg, #64748b 0%, #334155 45%, #1e293b 80%, #0f172a 100%)', isGlitter: false },
+  { id: 'electric-blue', name: 'Electric Blue', subtitle: 'Electric Neon', gradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 45%, #4338ca 100%)', cardGradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 45%, #4338ca 100%)', isGlitter: false },
+  { id: 'emerald-green', name: 'Emerald Green', subtitle: 'Royal Jade', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 80%, #022c22 100%)', cardGradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 80%, #022c22 100%)', isGlitter: false },
+  { id: 'obsidian-noir', name: 'Obsidian Noir', subtitle: 'Stealth Black', gradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)', cardGradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)', isGlitter: false },
+  { id: 'glitter-shimmer', name: 'Glitter Shimmer', subtitle: 'Glitter ✨', gradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 40%, #38bdf8 80%, #06b6d4 100%)', cardGradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 35%, #38bdf8 75%, #0284c7 100%)', isGlitter: true },
+  { id: 'glitter-gold', name: 'Glitter Gold', subtitle: 'Gold ✨', gradient: 'linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%)', cardGradient: 'linear-gradient(135deg, #facc15 0%, #eab308 45%, #ca8a04 85%, #92400e 100%)', isGlitter: true }
+];
+
+function getLuxuryTheme(id) {
+  return LUXURY_THEMES.find(t => t.id === id) || LUXURY_THEMES[7];
+}
+
 // Fast Levenshtein distance algorithm for typo matching
 function levenshteinDistance(a, b) {
   a = String(a || '').toLowerCase();
@@ -355,11 +372,11 @@ function findClosestCreator(raw) {
     }
   }
 
-  if (bestProfile && (bestScore >= 0.4 || levenshteinDistance(clean, bestProfile.username.toLowerCase()) <= 3)) {
+  if (bestProfile && (bestScore >= 0.65 || levenshteinDistance(clean, bestProfile.username.toLowerCase()) <= 2)) {
     return bestProfile;
   }
 
-  return bestProfile || getRandomProfile(clean);
+  return getRandomProfile(clean);
 }
 
 function getRandomProfile(clean) {
@@ -429,33 +446,131 @@ function openToolbox() {
 
 function home() {
   return `
-    <!-- Topbar (Image 1): < arrow opens Toolbox, LIVE rewards centered, X does nothing -->
+    <!-- Topbar: < arrow opens Toolbox, LIVE rewards centered, X does nothing -->
     <header class="home-topbar">
       <button class="icon" onclick="openToolbox()" title="Settings">‹</button>
       <h2 class="home-title">LIVE rewards</h2>
       <button class="icon home-close-btn" onclick="/* do nothing as requested */" title="Close">×</button>
     </header>
     
-    <section class="cards">
-      <div class="card">
-        <span>Available rewards</span>
-        <strong id="homeCardBalance">${moneyFmt(state.balance)}</strong>
+    <!-- Modern TikTok LIVE Rewards Container Card with Dynamic Theme -->
+    <div class="rewards-card-container">
+      <div class="rewards-dark-card ${(getLuxuryTheme(state.toolbox.theme || 'glitter-shimmer')).isGlitter ? 'has-glitter' : ''}" style="background: ${(getLuxuryTheme(state.toolbox.theme || 'glitter-shimmer')).cardGradient}">
+        <svg class="rewards-watermark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.901 2.868 2.893 2.893 0 0 1-2.892-2.892 2.896 2.896 0 0 1 2.892-2.894c.277 0 .542.04.794.113V9.38a6.34 6.34 0 0 0-.794-.052 6.353 6.353 0 0 0-6.35 6.35 6.353 6.353 0 0 0 6.35 6.35 6.354 6.354 0 0 0 6.349-6.35V8.847a8.214 8.214 0 0 0 4.767 1.503V6.905c-.34 0-.677-.074-.995-.219z"/>
+        </svg>
+
+        <!-- Profile & Level 50 Apex Section -->
+        <div class="rewards-profile-section">
+          <div class="rewards-profile-avatar-wrap">
+            <img
+              src="/assets/apex_profile.jpg"
+              alt="Apex"
+              class="rewards-profile-avatar"
+              onerror="this.onerror=null;this.src='/assets/avatar.jpg'"
+            />
+          </div>
+          <div class="rewards-profile-info">
+            <div class="rewards-profile-name">Apex</div>
+            <div class="rewards-level-badge" title="Apex Gifter Level 50">
+              <svg width="19" height="19" viewBox="0 0 100 100" fill="none" style="display:inline-block;vertical-align:middle;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35));">
+                <defs>
+                  <linearGradient id="goldRimScript" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#FFF2A3" />
+                    <stop offset="40%" stop-color="#FFAA00" />
+                    <stop offset="70%" stop-color="#D47800" />
+                    <stop offset="100%" stop-color="#FFD24D" />
+                  </linearGradient>
+                  <linearGradient id="centerAmberScript" x1="50" y1="38" x2="50" y2="72" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#FFF176" />
+                    <stop offset="45%" stop-color="#FFB300" />
+                    <stop offset="100%" stop-color="#FF8F00" />
+                  </linearGradient>
+                  <linearGradient id="facetTopScript" x1="50" y1="4" x2="50" y2="38" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#F5D0FE" />
+                    <stop offset="100%" stop-color="#E879F9" />
+                  </linearGradient>
+                  <linearGradient id="facetTopLeftScript" x1="8" y1="26" x2="31" y2="38" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#C084FC" />
+                    <stop offset="100%" stop-color="#9333EA" />
+                  </linearGradient>
+                  <linearGradient id="facetTopRightScript" x1="92" y1="26" x2="69" y2="38" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#E9D5FF" />
+                    <stop offset="100%" stop-color="#A855F7" />
+                  </linearGradient>
+                  <linearGradient id="facetBottomLeftScript" x1="8" y1="74" x2="50" y2="72" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#F43F5E" />
+                    <stop offset="100%" stop-color="#BE123C" />
+                  </linearGradient>
+                  <linearGradient id="facetBottomRightScript" x1="92" y1="74" x2="50" y2="72" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#FB7185" />
+                    <stop offset="100%" stop-color="#E11D48" />
+                  </linearGradient>
+                </defs>
+                <polygon points="50,6 31,38 69,38" fill="url(#facetTopScript)" />
+                <polygon points="50,6 8,26 31,38" fill="url(#facetTopLeftScript)" />
+                <polygon points="50,6 92,26 69,38" fill="url(#facetTopRightScript)" />
+                <polygon points="8,26 8,74 31,38" fill="#9333EA" />
+                <polygon points="92,26 92,74 69,38" fill="#D946EF" />
+                <polygon points="31,38 69,38 50,72" fill="url(#centerAmberScript)" />
+                <polygon points="8,74 31,38 50,72" fill="url(#facetBottomLeftScript)" />
+                <polygon points="92,74 69,38 50,72" fill="url(#facetBottomRightScript)" />
+                <polygon points="8,74 50,72 50,94" fill="url(#facetBottomLeftScript)" />
+                <polygon points="92,74 50,72 50,94" fill="url(#facetBottomRightScript)" />
+                <polygon points="50,6 92,26 92,74 50,94 8,74 8,26" fill="none" stroke="url(#goldRimScript)" stroke-width="4.5" stroke-linejoin="round" />
+                <polygon points="31,38 69,38 50,72" fill="none" stroke="url(#goldRimScript)" stroke-width="3" stroke-linejoin="round" />
+                <line x1="50" y1="6" x2="31" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="50" y1="6" x2="69" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="8" y1="26" x2="31" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="92" y1="26" x2="69" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="8" y1="74" x2="31" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="92" y1="74" x2="69" y2="38" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="8" y1="74" x2="50" y2="72" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="92" y1="74" x2="50" y2="72" stroke="url(#goldRimScript)" stroke-width="3" />
+                <line x1="50" y1="72" x2="50" y2="94" stroke="url(#goldRimScript)" stroke-width="3" />
+              </svg>
+              <span class="rewards-level-badge-num">50</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rewards-card-header">LIVE rewards</div>
+
+        <div class="rewards-amount-row">
+          <div class="rewards-amount-left">
+            <span class="rewards-cur-badge">${state.toolbox.currency || 'USD'}</span>
+            <span class="rewards-big-num" id="homeBigBalance">${fmt(state.balance)}</span>
+          </div>
+        </div>
+
+        <div class="rewards-card-divider"></div>
+
+        <div class="rewards-coins-section" onclick="openExchange()">
+          <div class="rewards-coins-head">
+            <span class="rewards-coins-label">Coins</span>
+            <span class="chevron">›</span>
+          </div>
+          <div class="rewards-coins-val">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;flex-shrink:0;">
+              <circle cx="12" cy="12" r="11" fill="url(#ttCoinGradHomeScript)" />
+              <circle cx="12" cy="12" r="9.5" stroke="#FFA700" stroke-width="1" opacity="0.6" fill="none" />
+              <path d="M15.4 7.6a3.6 3.6 0 0 1-2.1-.65v5.15a3.1 3.1 0 1 1-2.6-3.07v1.98a1.2 1.2 0 1 0 1.2 1.19V4.5h1.75a3.6 3.6 0 0 0 2.75 2.75v1.85z" fill="#FFFFFF"/>
+              <defs>
+                <linearGradient id="ttCoinGradHomeScript" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFC83B"/>
+                  <stop offset="1" stop-color="#FF9800"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="rewards-coins-count">${state.coins ? coinFmt(state.coins) : '0'}</span>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <span>Upcoming rewards <span class="upcoming-dot"></span></span>
-        <strong>${moneyFmt(state.upcomingBalance)}</strong>
-      </div>
-    </section>
-    
-    <section class="balance">
-      <div class="label">Available rewards</div>
-      <div class="big" id="homeBigBalance">${moneyFmt(state.balance)}</div>
-      <div class="conversion" id="homeBigCoins">= ${moneyFmt(state.balance)} ( <span class="coin">🪙</span> ${coinFmt(state.coins)} )</div>
-    </section>
+    </div>
     
     <section class="actions">
       <!-- Both Exchange and Withdraw open the same Exchange page as requested -->
-      <button class="btn primary" onclick="openExchange()">Exchange</button>
+      <button class="btn primary" onclick="openExchange()">${state.toolbox.walletMode === 'transfer' ? 'Transfer' : state.toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge'}</button>
       <button class="btn secondary" onclick="openExchange()">Withdraw</button>
       <div class="limit-row">
         <span class="limit-label">Daily withdrawal limit (Remain/Total)</span>
@@ -540,7 +655,7 @@ function renderProfileContainer() {
           <div class="pinfo">
             <div class="pname-row">
               <span class="pname" title="${esc(p.nickname || p.username)}">${esc(p.nickname || p.username)}</span>
-              <svg class="pbadge" viewBox="0 0 24 24" width="22" height="22" fill="#20d5ec" title="Verified Creator"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.2 14.2l-3.5-3.5 1.4-1.4 2.1 2.1 5.9-5.9 1.4 1.4-7.3 7.3z"/></svg>
+              ${p.verified ? `<svg class="pbadge" viewBox="0 0 24 24" width="22" height="22" fill="#20d5ec" title="Verified Creator"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.2 14.2l-3.5-3.5 1.4-1.4 2.1 2.1 5.9-5.9 1.4 1.4-7.3 7.3z"/></svg>` : ''}
             </div>
             <div class="puser">@${esc(p.username)}</div>
             <div class="stats-chips">
@@ -564,7 +679,7 @@ function exchange() {
     <div class="screen">
       <header class="topbar">
         <button class="icon" onclick="set({ screen: 'home' })">‹</button>
-        <h2>Exchange</h2>
+        <h2>Recharge</h2>
         <span class="icon icon-passive" aria-hidden="true" onclick="event.preventDefault(); return false;">?</span>
       </header>
       
@@ -603,26 +718,47 @@ function exchange() {
         
         <div class="field">
           <label>Exchange earnings for Coins</label>
-          <div class="packs">
-            <button class="pack ${state.selected === 250 ? 'active' : ''}" onclick="selectPack(250)">
-              <b>🪙 250</b>
-              <small>${moneyFmt(3.03)}</small>
-            </button>
-            <button class="pack ${state.selected === 500 ? 'active' : ''}" onclick="selectPack(500)">
-              <b>🪙 500</b>
-              <small>${moneyFmt(6.05)}</small>
-            </button>
-            <button class="pack ${state.selected === 15000 ? 'active' : ''}" onclick="selectPack(15000)">
-              <b>🪙 15,000</b>
-              <small>${moneyFmt(181.50)}</small>
+          <div class="recharge-grid">
+            ${[
+              { c: 30, p: 0.34 },
+              { c: 350, p: 3.95 },
+              { c: 700, p: 7.89 },
+              { c: 1400, p: 15.75 },
+              { c: 3500, p: 39.35 }
+            ].map(item => `
+              <button class="recharge-pack ${state.selected === item.c ? 'active' : ''}" onclick="selectPack(${item.c})">
+                <div class="recharge-pack-top">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;flex-shrink:0;">
+                    <circle cx="12" cy="12" r="11" fill="url(#ttCoinGradScript)" />
+                    <circle cx="12" cy="12" r="9.5" stroke="#FFA700" stroke-width="1" opacity="0.6" fill="none" />
+                    <path d="M15.4 7.6a3.6 3.6 0 0 1-2.1-.65v5.15a3.1 3.1 0 1 1-2.6-3.07v1.98a1.2 1.2 0 1 0 1.2 1.19V4.5h1.75a3.6 3.6 0 0 0 2.75 2.75v1.85z" fill="#FFFFFF"/>
+                    <defs>
+                      <linearGradient id="ttCoinGradScript" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFC83B"/>
+                        <stop offset="1" stop-color="#FF9800"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <span class="recharge-pack-coins">${coinFmt(item.c)}</span>
+                </div>
+                <div class="recharge-pack-price">€${fmt(item.p)}</div>
+              </button>
+            `).join('')}
+
+            <button class="recharge-pack recharge-custom-pack ${[30, 350, 700, 1400, 3500].includes(state.selected) || !state.selected ? '' : 'active'}" onclick="openCustom()">
+              ${[30, 350, 700, 1400, 3500].includes(state.selected) || !state.selected ? `
+                <span class="recharge-custom-label">Custom</span>
+              ` : `
+                <div class="recharge-pack-top">
+                  <span style="font-size:16px;">🪙</span>
+                  <span class="recharge-pack-coins">${coinFmt(state.selected)}</span>
+                </div>
+                <div class="recharge-pack-price">€${fmt((state.selected * 39.35) / 3500)}</div>
+              `}
             </button>
           </div>
           
-          <button class="custom ${[250, 500, 15000].includes(state.selected) || !state.selected ? '' : 'active'}" onclick="openCustom()">
-            ${state.selected ? coinFmt(state.selected) + ' Coins' : 'Enter a custom number or amount'}
-          </button>
-          
-          ${state.selected ? `<div class="exchange-preview">${coinFmt(state.selected)} Coins (≈ ${moneyFmt(dollars(state.selected))})</div>` : ''}
+          ${state.selected ? `<div class="exchange-preview">${coinFmt(state.selected)} Coins (≈ €${fmt((state.selected * 39.35) / 3500)})</div>` : ''}
           
           <div class="policy" onclick="alert('Virtual Items Policy')">Virtual Items Policy</div>
         </div>
@@ -633,8 +769,9 @@ function exchange() {
           id="exchangeSubmitBtn"
           class="btn primary"
           style="opacity: ${canExchange ? '1' : '0.45'}"
+          ${canExchange ? '' : 'disabled'}
           onclick="doExchange()"
-        >Exchange</button>
+        >Recharge</button>
       </div>
 
       <!-- Confirmation Popup Modal (Image 4) -->
@@ -668,14 +805,14 @@ function exchangeConfirmModal() {
           </div>
         </div>
         
-        <h3 class="confirm-modal-title">Complete exchange?</h3>
+        <h3 class="confirm-modal-title">Complete recharge?</h3>
         <p class="confirm-modal-desc">
           ${amountStr} will be deducted from LIVE rewards balance and sent to @${esc(clean)}
         </p>
         
         <div class="confirm-modal-actions">
           <button class="confirm-btn-back" onclick="closeExchangeModal()">Go back</button>
-          <button class="confirm-btn-exchange" onclick="confirmAndExecuteExchange()">Exchange</button>
+          <button class="confirm-btn-exchange" onclick="confirmAndExecuteExchange()">Recharge</button>
         </div>
       </div>
     </div>
@@ -837,6 +974,7 @@ function updateExchangeButtonState() {
   if (btn) {
     const isValid = Boolean(state.username.trim() && state.selected > 0);
     btn.style.opacity = isValid ? '1' : '0.45';
+    btn.disabled = !isValid;
   }
 }
 
@@ -941,7 +1079,6 @@ function key(k) {
 function doExchange() {
   const clean = cleanHandle(state.username);
   if (!clean || !state.selected) {
-    alert('Please enter a creator username and choose a coin amount.');
     return;
   }
   if (state.selected > state.coins) {
@@ -1209,6 +1346,36 @@ function toolbox() {
           </div>
         </div>
 
+        <!-- ✨ Chat & Payment Theme Texture (Revolut Luxury Tiers) -->
+        <div class="toolbox-card">
+          <div class="toolbox-head-split">
+            <div class="toolbox-label">✨ Chat &amp; Payment Theme Texture</div>
+            <div class="toolbox-tier-badge">Revolut Luxury Tiers</div>
+          </div>
+          <div class="toolbox-sub">Select custom luxury gradient card &amp; payment texture</div>
+
+          <div class="theme-grid-3x3">
+            ${LUXURY_THEMES.map(t => {
+              const isSelected = (tb.theme || 'glitter-shimmer') === t.id;
+              return `
+                <div class="theme-card-item ${isSelected ? 'active' : ''}" onclick="setToolbox('theme', '${t.id}')">
+                  <div class="theme-swatch-box" style="background: ${t.gradient}">
+                    ${isSelected ? `
+                      <div class="theme-check-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </div>
+                    ` : ''}
+                  </div>
+                  <div class="theme-card-name">${esc(t.name)}</div>
+                  <div class="theme-card-sub">${esc(t.subtitle)}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
         <!-- Currency -->
         <div class="toolbox-card">
           <div class="toolbox-label">Currency</div>
@@ -1373,23 +1540,11 @@ function render() {
       state.lastDeduction = null;
 
       const homeBal = document.getElementById('homeBigBalance');
-      const homeCardBal = document.getElementById('homeCardBalance');
-      const homeCoins = document.getElementById('homeBigCoins');
 
       if (homeBal) {
         homeBal.style.transition = 'color 0.25s ease';
         homeBal.style.color = '#fe2c55';
-        homeBal.textContent = moneyFmt(startBalance);
-      }
-      if (homeCardBal) {
-        homeCardBal.style.transition = 'color 0.25s ease';
-        homeCardBal.style.color = '#fe2c55';
-        homeCardBal.textContent = moneyFmt(startBalance);
-      }
-      if (homeCoins) {
-        homeCoins.style.transition = 'color 0.25s ease';
-        homeCoins.style.color = '#fe2c55';
-        homeCoins.innerHTML = `= ${moneyFmt(startBalance)} ( <span class="coin">🪙</span> ${coinFmt(startCoins)} )`;
+        homeBal.textContent = fmt(startBalance);
       }
 
       // Smooth count-down animation
@@ -1399,28 +1554,15 @@ function render() {
           endVal: endBalance,
           duration: 1300,
           onUpdate: (val, progress) => {
-            const curCoins = Math.round(startCoins - (startCoins - endCoins) * progress);
-            if (homeBal) homeBal.textContent = moneyFmt(val);
-            if (homeCardBal) homeCardBal.textContent = moneyFmt(val);
-            if (homeCoins) homeCoins.innerHTML = `= ${moneyFmt(val)} ( <span class="coin">🪙</span> ${coinFmt(curCoins)} )`;
+            if (homeBal) homeBal.textContent = fmt(val);
           },
           onDone: () => {
             state.balance = endBalance;
             state.coins = endCoins;
             if (homeBal) {
               homeBal.style.transition = 'color 0.4s ease';
-              homeBal.style.color = 'var(--ink)';
-              homeBal.textContent = moneyFmt(endBalance);
-            }
-            if (homeCardBal) {
-              homeCardBal.style.transition = 'color 0.4s ease';
-              homeCardBal.style.color = 'var(--ink)';
-              homeCardBal.textContent = moneyFmt(endBalance);
-            }
-            if (homeCoins) {
-              homeCoins.style.transition = 'color 0.4s ease';
-              homeCoins.style.color = 'var(--muted)';
-              homeCoins.innerHTML = `= ${moneyFmt(endBalance)} ( <span class="coin">🪙</span> ${coinFmt(endCoins)} )`;
+              homeBal.style.color = '#ffffff';
+              homeBal.textContent = fmt(endBalance);
             }
           }
         });
