@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { cleanHandle, dollars, moneyFmt, rate } from '../utils/formatters';
+import { cleanHandle, coinFmt, dollars, moneyFmt, rate } from '../utils/formatters';
 import { findClosestCreator, getRandomProfile, typoAliases, CREATOR_DATABASE } from '../data/creators';
 
 const WalletContext = createContext();
