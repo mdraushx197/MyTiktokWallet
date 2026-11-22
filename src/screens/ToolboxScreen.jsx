@@ -171,6 +171,26 @@ export default function ToolboxScreen() {
           </div>
         </div>
 
+        <div className="toolbox-card">
+          <div className="toolbox-label">Transaction details layout</div>
+          <div className="toolbox-sub">Choose the summary shown after confirmation</div>
+          <div className="toolbox-btn-group grid-2">
+            {[['current', 'Current summary'], ['receipt', 'Transaction details']].map(([value, label]) => (
+              <button type="button" key={value} className={`tb-btn ${(toolbox.transactionDetailsStyle || 'current') === value ? 'active' : ''}`} aria-pressed={(toolbox.transactionDetailsStyle || 'current') === value} onClick={() => updateSetting('transactionDetailsStyle', value)}>{label}</button>
+            ))}
+          </div>
+        </div>
+
+        <div className="toolbox-card">
+          <div className="toolbox-label">Go back button position</div>
+          <div className="toolbox-sub">Place the button after the details or at the bottom of the page</div>
+          <div className="toolbox-btn-group grid-2">
+            {[['up', 'Up (current)'], ['bottom', 'Bottom']].map(([value, label]) => (
+              <button type="button" key={value} className={`tb-btn ${(toolbox.successButtonPosition || 'up') === value ? 'active' : ''}`} aria-pressed={(toolbox.successButtonPosition || 'up') === value} onClick={() => updateSetting('successButtonPosition', value)}>{label}</button>
+            ))}
+          </div>
+        </div>
+
         {/* Mode 2 — Exchange Complete style */}
         <div className="toolbox-card">
           <div className="toolbox-label">Mode 2 — Exchange Complete style</div>

@@ -2322,3 +2322,110 @@ input {
   pointer-events: none;
 }
 
+
+/* Summary controls: bottom placement stays in flow on short screens. */
+.success-bottom-button {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+.success-bottom-button > .success-back-button {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.success-bottom-button > .details {
+  padding-bottom: 24px;
+}
+
+/* Alternate receipt layout uses a light surface for consistent contrast. */
+.transaction-receipt {
+  background: #f7f8fa;
+  color: #17191f;
+  --theme-text: #17191f;
+  --theme-subtext: #515660;
+  --theme-border: #e2e4e8;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding-top: 12px;
+}
+.receipt-header {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+}
+.receipt-header button {
+  border: 0;
+  background: transparent;
+  color: #17191f;
+  font-size: 32px;
+  cursor: pointer;
+}
+.receipt-header h1 {
+  font-size: 21px;
+  margin: 0;
+}
+.receipt-summary {
+  padding: 42px 8px 36px;
+}
+.receipt-summary p {
+  font-size: 17px;
+  line-height: 1.5;
+  color: #515660;
+  margin: 0 0 12px;
+}
+.receipt-total {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 5px;
+}
+.receipt-total span { font-size: 17px; font-weight: 700; }
+.receipt-total strong { font-size: 34px; overflow-wrap: anywhere; }
+.receipt-details {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 0 0 24px;
+  text-align: left;
+}
+.receipt-details > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.receipt-details dt { color: #515660; }
+.receipt-details dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.receipt-details dd svg { vertical-align: middle; }
+.receipt-status > span {
+  display: inline-grid;
+  place-items: center;
+  background: #008a3b;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+.receipt-id { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.receipt-id span { min-width: 0; user-select: all; }
+.receipt-id button {
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  color: #515660;
+  font-size: 23px;
+  padding: 4px;
+  cursor: pointer;
+}

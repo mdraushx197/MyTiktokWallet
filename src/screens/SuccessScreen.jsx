@@ -6,7 +6,7 @@ import { TikTokCoinIcon } from '../components/common/Coin';
 import { getThemeById } from '../data/themes';
 
 export default function SuccessScreen() {
-  const { lastTx, toolbox, setScreen } = useWallet();
+  const { lastTx, toolbox, setScreen, showTopNotification } = useWallet();
   const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
 
   if (!lastTx) {
@@ -27,9 +27,47 @@ export default function SuccessScreen() {
   const isRedTheme = toolbox.exchangeCompleteStyle === 'red';
   const modeTitle = toolbox.walletMode === 'transfer' ? 'Transfer' : toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge';
   const verb = toolbox.walletMode === 'transfer' ? 'transferred' : toolbox.walletMode === 'exchange' ? 'exchanged' : 'recharged';
+  const positionClass = toolbox.successButtonPosition === 'bottom' ? 'success-bottom-button' : '';
+  const backButton = (
+    <Button className="success-back-button" variant={isRedTheme ? 'primary' : 'green'} onClick={() => setScreen('home')}>
+      Go back
+    </Button>
+  );
+
+  if (toolbox.transactionDetailsStyle === 'receipt') {
+    const copyTransactionId = async () => {
+      try {
+        await navigator.clipboard.writeText(lastTx.id);
+        showTopNotification('Transaction ID copied');
+      } catch {
+        showTopNotification('Unable to copy. Select and copy the transaction ID.');
+      }
+    };
+
+    return (
+      <div className={`success transaction-receipt ${positionClass}`}>
+        <header className="receipt-header">
+          <button type="button" aria-label="Go back" onClick={() => setScreen('home')}>‹</button>
+          <h1>Transaction details</h1>
+        </header>
+        <div className="receipt-summary">
+          <p>LIVE Gifts balance exchanged for {coinFmt(lastTx.coins)} Coins</p>
+          <div className="receipt-total"><span>{toolbox.currency}</span><strong>{moneyFmt(lastTx.amount, toolbox.currency).replace(/^[^\d]+/, '')}</strong></div>
+        </div>
+        <dl className="receipt-details">
+          <div><dt>Status</dt><dd className="receipt-status"><span aria-hidden="true">✓</span> Completed</dd></div>
+          <div><dt>Amount</dt><dd><TikTokCoinIcon size={20} /> {coinFmt(lastTx.coins)}</dd></div>
+          <div><dt>Payment method</dt><dd>Balance exchange</dd></div>
+          <div><dt>Date and time</dt><dd>{lastTx.time}</dd></div>
+          <div><dt>Transaction ID</dt><dd className="receipt-id"><span>{lastTx.id}</span><button type="button" aria-label="Copy transaction ID" onClick={copyTransactionId}>⧉</button></dd></div>
+        </dl>
+        {backButton}
+      </div>
+    );
+  }
 
   return (
-    <div className="success" style={{ background: currentTheme.pageBg }}>
+    <div className={`success ${positionClass}`} style={{ background: currentTheme.pageBg }}>
       <div className={`check ${isRedTheme ? 'red-theme' : ''}`}>✓</div>
       <h1>{modeTitle} completed</h1>
       <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
@@ -88,17 +126,7 @@ export default function SuccessScreen() {
         </div>
       </div>
 
-      <Button
-        variant={isRedTheme ? 'primary' : 'green'}
-        onClick={() => setScreen('home')}
-        style={isRedTheme ? {
-          background: 'var(--red)',
-          color: '#ffffff',
-          boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)'
-        } : {}}
-      >
-        Go back
-      </Button>
+      {backButton}
     </div>
   );
 }
