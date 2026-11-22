@@ -25,6 +25,7 @@ export default function ExchangeScreen() {
     profileError,
     showExchangeModal,
     setShowExchangeModal,
+    showTopNotification,
     toolbox,
     setScreen,
     executeExchange
