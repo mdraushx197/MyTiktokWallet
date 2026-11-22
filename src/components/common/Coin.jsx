@@ -2,7 +2,8 @@ import React from 'react';
 import { coinFmt } from '../../utils/formatters';
 
 /**
- * TikTok Coin SVG icon matching the gold coin badge from the recharge screen
+ * Authentic TikTok Gold Coin SVG icon with 3D bevel and TikTok musical note
+ * Always renders rich golden-yellow (#FFC83B to #FF9800) on all platforms.
  */
 export function TikTokCoinIcon({ size = 18, className = '', style = {} }) {
   return (
@@ -12,10 +13,16 @@ export function TikTokCoinIcon({ size = 18, className = '', style = {} }) {
       viewBox="0 0 24 24"
       fill="none"
       className={className}
-      style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0, ...style }}
+      style={{
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        flexShrink: 0,
+        filter: 'drop-shadow(0 1px 2px rgba(255, 152, 0, 0.35))',
+        ...style
+      }}
     >
       <circle cx="12" cy="12" r="11" fill="url(#ttCoinGrad)" />
-      <circle cx="12" cy="12" r="9.5" stroke="#FFA700" strokeWidth="1" opacity="0.6" fill="none" />
+      <circle cx="12" cy="12" r="9.5" stroke="#FFA700" strokeWidth="1" opacity="0.75" fill="none" />
       <path
         d="M15.4 7.6a3.6 3.6 0 0 1-2.1-.65v5.15a3.1 3.1 0 1 1-2.6-3.07v1.98a1.2 1.2 0 1 0 1.2 1.19V4.5h1.75a3.6 3.6 0 0 0 2.75 2.75v1.85z"
         fill="#FFFFFF"
@@ -32,7 +39,7 @@ export function TikTokCoinIcon({ size = 18, className = '', style = {} }) {
 
 /**
  * Reusable Coin Component
- * Displays TikTok coin icon and/or formatted coin count
+ * Always uses the original yellow/gold TikTok coin icon instead of OS emoji
  */
 export default function Coin({
   amount,
@@ -46,11 +53,9 @@ export default function Coin({
     return (
       <span
         className={`coin-icon ${className}`.trim()}
-        role="img"
-        aria-label="coin"
-        style={{ fontSize: `${size}px`, display: 'inline-flex', alignItems: 'center', ...style }}
+        style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', ...style }}
       >
-        🪙
+        <TikTokCoinIcon size={size} />
       </span>
     );
   }
@@ -58,9 +63,9 @@ export default function Coin({
   return (
     <span
       className={`coin-display ${className}`.trim()}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', ...style }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', verticalAlign: 'middle', ...style }}
     >
-      <span className="coin" style={{ fontSize: `${size}px` }}>🪙</span>
+      <TikTokCoinIcon size={size} />
       {showAmount && amount !== undefined && (
         <span className="coin-value">{coinFmt(amount)}</span>
       )}

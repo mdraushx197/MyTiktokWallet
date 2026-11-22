@@ -2,15 +2,22 @@ import React from 'react';
 import { useWallet } from '../context/WalletContext';
 import { moneyFmt, coinFmt } from '../utils/formatters';
 import Button from '../components/common/Button';
+import { TikTokCoinIcon } from '../components/common/Coin';
+import { getThemeById } from '../data/themes';
 
 export default function SuccessScreen() {
   const { lastTx, toolbox, setScreen } = useWallet();
+  const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
 
   if (!lastTx) {
     return (
-      <div className="screen" style={{ padding: 24, textAlign: 'center' }}>
+      <div className="screen" style={{ padding: 24, textAlign: 'center', background: currentTheme.pageBg }}>
         <p>No exchange data found.</p>
-        <Button variant="primary" onClick={() => setScreen('home')}>
+        <Button
+          variant="primary"
+          onClick={() => setScreen('home')}
+          style={{ background: 'var(--red)', color: '#ffffff', boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)' }}
+        >
           Go to Home
         </Button>
       </div>
@@ -22,10 +29,12 @@ export default function SuccessScreen() {
   const verb = toolbox.walletMode === 'transfer' ? 'transferred' : toolbox.walletMode === 'exchange' ? 'exchanged' : 'recharged';
 
   return (
-    <div className="success">
+    <div className="success" style={{ background: currentTheme.pageBg }}>
       <div className={`check ${isRedTheme ? 'red-theme' : ''}`}>✓</div>
       <h1>{modeTitle} completed</h1>
-      <h3>You {verb} for 🪙 {coinFmt(lastTx.coins)} Coins</h3>
+      <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        You {verb} for <TikTokCoinIcon size={20} /> {coinFmt(lastTx.coins)} Coins
+      </h3>
 
       <div className="details">
         <div className="row">
@@ -50,7 +59,9 @@ export default function SuccessScreen() {
         </div>
         <div className="row">
           <span>Coins {modeTitle === 'Transfer' ? 'Transferred' : modeTitle === 'Exchange' ? 'Exchanged' : 'Recharged'}</span>
-          <span>🪙 {coinFmt(lastTx.coins)} Coins</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <TikTokCoinIcon size={16} /> {coinFmt(lastTx.coins)} Coins
+          </span>
         </div>
         <div className="row">
           <span>Deducted Amount</span>
@@ -80,6 +91,11 @@ export default function SuccessScreen() {
       <Button
         variant={isRedTheme ? 'primary' : 'green'}
         onClick={() => setScreen('home')}
+        style={isRedTheme ? {
+          background: 'var(--red)',
+          color: '#ffffff',
+          boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)'
+        } : {}}
       >
         Go back
       </Button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { moneyFmt, coinFmt } from '../../utils/formatters';
+import { TikTokCoinIcon } from '../common/Coin';
 
 export default function TransactionList({
   transactions = [],
@@ -23,13 +24,24 @@ export default function TransactionList({
                   alt={tx.name}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.outerHTML = '<div class="avatar">🪙</div>';
+                    e.currentTarget.style.display = 'none';
+                    if (e.currentTarget.nextElementSibling) {
+                      e.currentTarget.nextElementSibling.style.display = 'inline-flex';
+                    }
                   }}
                 />
-              ) : (
-                <div className="avatar">🪙</div>
-              )}
+              ) : null}
+              <div
+                className="avatar"
+                style={{
+                  display: tx.avatar ? 'none' : 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'none'
+                }}
+              >
+                <TikTokCoinIcon size={24} />
+              </div>
               <div>
                 <div className="txname">{tx.name}</div>
                 <div className="txsub">

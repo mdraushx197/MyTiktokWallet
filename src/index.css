@@ -1481,7 +1481,106 @@ input {
   background: #fff4f6;
 }
 
-/* Top Push Notification with Dynamic Island safe spacing */
+/* Top Push Notification with Dynamic Island safe spacing (Authentic iOS 17/18 Style) */
+.ios-notif-wrapper {
+  position: fixed;
+  top: calc(12px + var(--sat, 0px));
+  left: 50%;
+  transform: translateX(-50%) translateY(-180%) scale(0.92);
+  transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  width: min(calc(100% - 24px), 392px);
+  user-select: none;
+}
+
+.ios-notif-wrapper.show {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.ios-notif-banner {
+  background: rgba(30, 31, 36, 0.84);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 12px 16px;
+  box-shadow:
+    0 14px 38px -4px rgba(0, 0, 0, 0.42),
+    0 4px 12px rgba(0, 0, 0, 0.22),
+    inset 0 0.5px 0.5px rgba(255, 255, 255, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
+  color: #ffffff;
+  transition: transform 0.12s ease;
+}
+
+.ios-notif-wrapper:active .ios-notif-banner {
+  transform: scale(0.98);
+}
+
+.ios-notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.ios-notif-app {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ios-app-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.ios-app-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+}
+
+.ios-notif-time {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.ios-notif-body {
+  padding-left: 1px;
+}
+
+.ios-notif-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  margin-bottom: 2px;
+}
+
+.ios-notif-desc {
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 400;
+  word-break: break-word;
+}
+
+/* Fallback top-notification class */
 .top-notification {
   position: fixed;
   top: calc(10px + var(--sat));
@@ -1865,46 +1964,51 @@ input {
   display: flex;
   align-items: baseline;
   justify-content: flex-start;
+  margin: 4px 0 2px;
 }
 
 .rewards-amount-left {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 7px;
   flex-wrap: nowrap;
   width: 100%;
 }
 
 .rewards-cur-badge {
-  font-size: clamp(28px, 8.2vw, 38px);
-  font-weight: 850;
+  font-size: clamp(21px, 5.8vw, 30px);
+  font-weight: 800;
   color: #ffffff;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.2px;
   flex-shrink: 0;
-  line-height: 1;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  -webkit-font-smoothing: antialiased;
 }
 
 .rewards-big-num {
-  font-size: clamp(28px, 8.2vw, 38px);
-  font-weight: 850;
+  font-size: clamp(23px, 6.4vw, 32px);
+  font-weight: 800;
   color: #ffffff;
-  letter-spacing: -0.5px;
-  line-height: 1;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
   white-space: nowrap;
   overflow: visible;
   transition: color 0.4s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  -webkit-font-smoothing: antialiased;
 }
 
 .rewards-card-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.09);
-  margin: 24px 0 18px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 20px 0 16px;
 }
 
 /* Full-width spacious Coins Section */
 .rewards-coins-section {
   cursor: pointer;
-  padding: 8px 0 4px;
+  padding: 6px 0 4px;
   display: flex;
   flex-direction: column;
   transition: opacity 0.15s ease;
@@ -1918,13 +2022,13 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14.5px;
-  font-weight: 500;
-  color: #a0a2a8;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .rewards-coins-head .chevron {
-  color: #717379;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 18px;
   line-height: 1;
 }
@@ -1937,11 +2041,12 @@ input {
 }
 
 .rewards-coins-count {
-  font-size: clamp(22px, 5.5vw, 26px);
+  font-size: clamp(20px, 5.4vw, 25px);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.3px;
   line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 /* Experience Level Row & Progress Bar */

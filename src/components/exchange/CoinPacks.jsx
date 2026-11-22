@@ -14,7 +14,8 @@ export default function CoinPacks({
   selected,
   onSelectPack,
   onOpenCustom,
-  currency = 'USD'
+  currency = 'USD',
+  accentColor
 }) {
   const isPresetSelected = RECHARGE_PACKS.some(p => p.coins === selected);
   const isCustomActive = selected > 0 && !isPresetSelected;
@@ -34,6 +35,7 @@ export default function CoinPacks({
               key={p.coins}
               type="button"
               className={`recharge-pack ${isActive ? 'active' : ''}`}
+              style={isActive && accentColor ? { borderColor: accentColor, background: `${accentColor}18` } : {}}
               onClick={() => onSelectPack(p.coins)}
             >
               <div className="recharge-pack-top">
@@ -51,6 +53,7 @@ export default function CoinPacks({
         <button
           type="button"
           className={`recharge-pack recharge-custom-pack ${isCustomActive ? 'active' : ''}`}
+          style={isCustomActive && accentColor ? { borderColor: accentColor, background: `${accentColor}18` } : {}}
           onClick={onOpenCustom}
         >
           {isCustomActive ? (

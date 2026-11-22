@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useWallet } from '../context/WalletContext';
 import { moneyFmt, coinFmt, cleanHandle } from '../utils/formatters';
-import Coin from '../components/common/Coin';
+import Coin, { TikTokCoinIcon } from '../components/common/Coin';
 import Button from '../components/common/Button';
 import CreatorLookup from '../components/exchange/CreatorLookup';
 import ProfileCard from '../components/exchange/ProfileCard';
 import CoinPacks from '../components/exchange/CoinPacks';
 import CustomKeypadSheet from '../components/exchange/CustomKeypadSheet';
 import ExchangeConfirmModal from '../components/exchange/ExchangeConfirmModal';
+import { getThemeById } from '../data/themes';
 
 export default function ExchangeScreen() {
   const {
@@ -31,6 +32,7 @@ export default function ExchangeScreen() {
 
   const [isCustomSheetOpen, setIsCustomSheetOpen] = useState(false);
 
+  const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
   const clean = cleanHandle(username, toolbox.autoAtRemove);
   const canExchange = Boolean(clean && selectedCoins > 0);
   const actionTitle = toolbox.walletMode === 'transfer' ? 'Transfer' : toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge';
@@ -42,8 +44,8 @@ export default function ExchangeScreen() {
   };
 
   return (
-    <div className="screen">
-      <header className="topbar">
+    <div className="screen" style={{ background: currentTheme.pageBg }}>
+      <header className="topbar" style={{ background: 'transparent' }}>
         <button
           type="button"
           className="icon"
@@ -66,7 +68,7 @@ export default function ExchangeScreen() {
           {moneyFmt(balance, toolbox.currency)}
         </div>
         <div className="conversion" id="exchangeCoins">
-          = {moneyFmt(balance, toolbox.currency)} ( <Coin iconOnly size={16} /> {coinFmt(coins)} )
+          = {moneyFmt(balance, toolbox.currency)} ( <TikTokCoinIcon size={16} /> {coinFmt(coins)} )
         </div>
         <div className="label" style={{ marginTop: 24 }}>
           Available balance to exchange for Coins
@@ -94,15 +96,23 @@ export default function ExchangeScreen() {
           onSelectPack={selectPack}
           onOpenCustom={() => setIsCustomSheetOpen(true)}
           currency={toolbox.currency}
+          accentColor={currentTheme.accentColor}
         />
       </div>
 
       <div className="sticky">
+        {/* User requirement: "keep the all recharge button red" */}
         <Button
           id="exchangeSubmitBtn"
           variant="primary"
           disabled={!canExchange}
           onClick={handleExchangeClick}
+          style={canExchange ? {
+            background: 'var(--red)',
+            color: '#ffffff',
+            boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)',
+            border: 'none'
+          } : {}}
         >
           {actionTitle}
         </Button>

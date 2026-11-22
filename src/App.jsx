@@ -6,13 +6,26 @@ import HomeScreen from './screens/HomeScreen';
 import ExchangeScreen from './screens/ExchangeScreen';
 import SuccessScreen from './screens/SuccessScreen';
 import ToolboxScreen from './screens/ToolboxScreen';
+import { getThemeById } from './data/themes';
 import './index.css';
 
 function MainRouter() {
-  const { screen, notification, hideTopNotification, loadingOverlay } = useWallet();
+  const { screen, notification, hideTopNotification, loadingOverlay, toolbox } = useWallet();
+  const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
 
   return (
-    <>
+    <div
+      className="app"
+      style={{
+        '--theme-accent': currentTheme.accentColor,
+        '--theme-page-bg': currentTheme.pageBg,
+        '--theme-card-grad': currentTheme.cardGradient,
+        '--theme-card-shadow': currentTheme.cardShadow,
+        background: currentTheme.pageBg,
+        minHeight: '100vh',
+        transition: 'background 0.4s ease'
+      }}
+    >
       <NotificationBanner
         visible={notification.visible}
         title={notification.title}
@@ -31,7 +44,7 @@ function MainRouter() {
       {screen === 'exchange' && <ExchangeScreen />}
       {screen === 'success' && <SuccessScreen />}
       {screen === 'toolbox' && <ToolboxScreen />}
-    </>
+    </div>
   );
 }
 

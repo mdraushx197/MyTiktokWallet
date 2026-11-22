@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWallet } from '../context/WalletContext';
 import Button from '../components/common/Button';
-import { LUXURY_THEMES } from '../data/themes';
+import { LUXURY_THEMES, getThemeById } from '../data/themes';
 
 export default function ToolboxScreen() {
   const {
@@ -15,6 +15,8 @@ export default function ToolboxScreen() {
     previewLoadingAnimation,
     showTopNotification
   } = useWallet();
+
+  const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
 
   const [localBalance, setLocalBalance] = useState(balance);
   const [localUpcoming, setLocalUpcoming] = useState(upcomingBalance);
@@ -91,8 +93,8 @@ export default function ToolboxScreen() {
   };
 
   return (
-    <div className="screen toolbox-screen">
-      <header className="topbar" style={{ background: '#fff' }}>
+    <div className="screen toolbox-screen" style={{ background: currentTheme.pageBg }}>
+      <header className="topbar" style={{ background: 'transparent' }}>
         <button
           type="button"
           className="icon"

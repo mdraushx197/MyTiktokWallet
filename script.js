@@ -276,15 +276,159 @@ const typoAliases = {
 };
 
 const LUXURY_THEMES = [
-  { id: 'metal-gold', name: 'Metal Gold', subtitle: 'Classic Gold', gradient: 'linear-gradient(135deg, #e67e00 0%, #b85d00 45%, #6d3200 100%)', cardGradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 35%, #92400e 75%, #451a03 100%)', isGlitter: false },
-  { id: 'ultra-platinum', name: 'Ultra Platinum', subtitle: 'Ultra Mirror', gradient: 'linear-gradient(135deg, #e2e8f0 0%, #94a3b8 35%, #475569 70%, #1e293b 100%)', cardGradient: 'linear-gradient(135deg, #cbd5e1 0%, #94a3b8 30%, #334155 70%, #0f172a 100%)', isGlitter: false },
-  { id: 'rose-gold', name: 'Rose Gold', subtitle: 'Rose Metal', gradient: 'linear-gradient(135deg, #fb7185 0%, #e11d48 40%, #881337 75%, #4c0519 100%)', cardGradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 35%, #881337 75%, #4c0519 100%)', isGlitter: false },
-  { id: 'space-grey', name: 'Space Grey', subtitle: 'Titanium', gradient: 'linear-gradient(135deg, #64748b 0%, #334155 45%, #1e293b 80%, #0f172a 100%)', cardGradient: 'linear-gradient(135deg, #64748b 0%, #334155 45%, #1e293b 80%, #0f172a 100%)', isGlitter: false },
-  { id: 'electric-blue', name: 'Electric Blue', subtitle: 'Electric Neon', gradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 45%, #4338ca 100%)', cardGradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 45%, #4338ca 100%)', isGlitter: false },
-  { id: 'emerald-green', name: 'Emerald Green', subtitle: 'Royal Jade', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 80%, #022c22 100%)', cardGradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 80%, #022c22 100%)', isGlitter: false },
-  { id: 'obsidian-noir', name: 'Obsidian Noir', subtitle: 'Stealth Black', gradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)', cardGradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)', isGlitter: false },
-  { id: 'glitter-shimmer', name: 'Glitter Shimmer', subtitle: 'Glitter ✨', gradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 40%, #38bdf8 80%, #06b6d4 100%)', cardGradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 35%, #38bdf8 75%, #0284c7 100%)', isGlitter: true },
-  { id: 'glitter-gold', name: 'Glitter Gold', subtitle: 'Gold ✨', gradient: 'linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%)', cardGradient: 'linear-gradient(135deg, #facc15 0%, #eab308 45%, #ca8a04 85%, #92400e 100%)', isGlitter: true }
+  {
+    id: 'metal-gold',
+    name: 'Metal Gold',
+    subtitle: 'Classic Gold',
+    gradient: 'linear-gradient(135deg, #e67e00 0%, #b85d00 45%, #6d3200 100%)',
+    cardGradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 35%, #92400e 75%, #451a03 100%)',
+    cardShadow: '0 12px 32px rgba(184, 93, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#f59e0b',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #fffbeb 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%)',
+    btnShadow: '0 4px 16px rgba(217, 119, 6, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'ultra-platinum',
+    name: 'Ultra Platinum',
+    subtitle: 'Ultra Mirror',
+    gradient: 'linear-gradient(135deg, #e2e8f0 0%, #94a3b8 35%, #475569 70%, #1e293b 100%)',
+    cardGradient: 'linear-gradient(135deg, #94a3b8 0%, #475569 35%, #1e293b 75%, #0f172a 100%)',
+    cardShadow: '0 12px 32px rgba(30, 41, 59, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#38bdf8',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #475569 0%, #334155 50%, #1e293b 100%)',
+    btnShadow: '0 4px 16px rgba(30, 41, 59, 0.35)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'rose-gold',
+    name: 'Rose Gold',
+    subtitle: 'Rose Metal',
+    gradient: 'linear-gradient(135deg, #fb7185 0%, #e11d48 40%, #881337 75%, #4c0519 100%)',
+    cardGradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 35%, #881337 75%, #4c0519 100%)',
+    cardShadow: '0 12px 32px rgba(225, 29, 72, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#fb7185',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #fff1f2 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)',
+    btnShadow: '0 4px 16px rgba(225, 29, 72, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'space-grey',
+    name: 'Space Grey',
+    subtitle: 'Titanium',
+    gradient: 'linear-gradient(135deg, #64748b 0%, #334155 45%, #1e293b 80%, #0f172a 100%)',
+    cardGradient: 'linear-gradient(135deg, #475569 0%, #334155 40%, #1e293b 75%, #0f172a 100%)',
+    cardShadow: '0 12px 32px rgba(15, 23, 42, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#94a3b8',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #f1f5f9 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #334155 0%, #1e293b 100%)',
+    btnShadow: '0 4px 16px rgba(15, 23, 42, 0.35)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'electric-blue',
+    name: 'Electric Blue',
+    subtitle: 'Electric Neon',
+    gradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 45%, #4338ca 100%)',
+    cardGradient: 'linear-gradient(135deg, #00d2ff 0%, #0077b6 40%, #312e81 80%, #1e1b4b 100%)',
+    cardShadow: '0 12px 32px rgba(0, 119, 182, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#00d2ff',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #f0f7ff 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 50%, #4338ca 100%)',
+    btnShadow: '0 4px 16px rgba(0, 119, 182, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'emerald-green',
+    name: 'Emerald Green',
+    subtitle: 'Royal Jade',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 80%, #022c22 100%)',
+    cardGradient: 'linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 75%, #022c22 100%)',
+    cardShadow: '0 12px 32px rgba(5, 150, 105, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#34d399',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #f0fdf4 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+    btnShadow: '0 4px 16px rgba(5, 150, 105, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'obsidian-noir',
+    name: 'Obsidian Noir',
+    subtitle: 'Stealth Black',
+    gradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)',
+    cardGradient: 'linear-gradient(135deg, #262626 0%, #171717 50%, #0a0a0a 100%)',
+    cardShadow: '0 12px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3)',
+    accentColor: '#fe2c55',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.85)',
+    dividerColor: 'rgba(255, 255, 255, 0.18)',
+    pageBg: 'linear-gradient(180deg, #fafafa 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #fe2c55 0%, #e02449 100%)',
+    btnShadow: '0 4px 16px rgba(254, 44, 85, 0.35)',
+    btnTextColor: '#ffffff',
+    isGlitter: false
+  },
+  {
+    id: 'glitter-shimmer',
+    name: 'Glitter Shimmer',
+    subtitle: 'Glitter ✨',
+    gradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 40%, #38bdf8 80%, #06b6d4 100%)',
+    cardGradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 35%, #0284c7 75%, #0c4a6e 100%)',
+    cardShadow: '0 12px 32px rgba(129, 140, 248, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#38bdf8',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.88)',
+    dividerColor: 'rgba(255, 255, 255, 0.2)',
+    pageBg: 'linear-gradient(180deg, #faf5ff 0%, #f0f9ff 180px, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #c084fc 0%, #818cf8 45%, #38bdf8 100%)',
+    btnShadow: '0 4px 16px rgba(129, 140, 248, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: true
+  },
+  {
+    id: 'glitter-gold',
+    name: 'Glitter Gold',
+    subtitle: 'Gold ✨',
+    gradient: 'linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%)',
+    cardGradient: 'linear-gradient(135deg, #facc15 0%, #eab308 35%, #ca8a04 70%, #78350f 100%)',
+    cardShadow: '0 12px 32px rgba(202, 138, 4, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25)',
+    accentColor: '#eab308',
+    textColor: '#ffffff',
+    subTextColor: 'rgba(255, 255, 255, 0.88)',
+    dividerColor: 'rgba(255, 255, 255, 0.2)',
+    pageBg: 'linear-gradient(180deg, #fefce8 0%, #ffffff 360px)',
+    btnGradient: 'linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%)',
+    btnShadow: '0 4px 16px rgba(202, 138, 4, 0.4)',
+    btnTextColor: '#ffffff',
+    isGlitter: true
+  }
 ];
 
 function getLuxuryTheme(id) {
@@ -445,6 +589,7 @@ function openToolbox() {
 }
 
 function home() {
+  const theme = getLuxuryTheme(state.toolbox.theme || 'glitter-shimmer');
   return `
     <!-- Topbar: < arrow opens Toolbox, LIVE rewards centered, X does nothing -->
     <header class="home-topbar">
@@ -455,7 +600,7 @@ function home() {
     
     <!-- Modern TikTok LIVE Rewards Container Card with Dynamic Theme -->
     <div class="rewards-card-container">
-      <div class="rewards-dark-card ${(getLuxuryTheme(state.toolbox.theme || 'glitter-shimmer')).isGlitter ? 'has-glitter' : ''}" style="background: ${(getLuxuryTheme(state.toolbox.theme || 'glitter-shimmer')).cardGradient}">
+      <div class="rewards-dark-card ${theme.isGlitter ? 'has-glitter' : ''}" style="background: ${theme.cardGradient}; box-shadow: ${theme.cardShadow};">
         <svg class="rewards-watermark" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.901 2.868 2.893 2.893 0 0 1-2.892-2.892 2.896 2.896 0 0 1 2.892-2.894c.277 0 .542.04.794.113V9.38a6.34 6.34 0 0 0-.794-.052 6.353 6.353 0 0 0-6.35 6.35 6.353 6.353 0 0 0 6.35 6.35 6.354 6.354 0 0 0 6.349-6.35V8.847a8.214 8.214 0 0 0 4.767 1.503V6.905c-.34 0-.677-.074-.995-.219z"/>
         </svg>
@@ -471,7 +616,7 @@ function home() {
             />
           </div>
           <div class="rewards-profile-info">
-            <div class="rewards-profile-name">Apex</div>
+            <div class="rewards-profile-name" style="color:${theme.textColor};text-shadow:0 1px 3px rgba(0,0,0,0.45);">Apex</div>
             <div class="rewards-level-badge" title="Apex Gifter Level 50">
               <svg width="19" height="19" viewBox="0 0 100 100" fill="none" style="display:inline-block;vertical-align:middle;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35));">
                 <defs>
@@ -534,21 +679,21 @@ function home() {
           </div>
         </div>
 
-        <div class="rewards-card-header">LIVE rewards</div>
+        <div class="rewards-card-header" style="color:${theme.subTextColor};text-shadow:0 1px 2px rgba(0,0,0,0.3);">LIVE rewards</div>
 
         <div class="rewards-amount-row">
           <div class="rewards-amount-left">
-            <span class="rewards-cur-badge">${state.toolbox.currency || 'USD'}</span>
-            <span class="rewards-big-num" id="homeBigBalance">${fmt(state.balance)}</span>
+            <span class="rewards-cur-badge" style="color:${theme.textColor};text-shadow:0 1px 3px rgba(0,0,0,0.45);">${state.toolbox.currency || 'USD'}</span>
+            <span class="rewards-big-num" id="homeBigBalance" style="color:${theme.textColor};text-shadow:0 1px 3px rgba(0,0,0,0.45);">${fmt(state.balance)}</span>
           </div>
         </div>
 
-        <div class="rewards-card-divider"></div>
+        <div class="rewards-card-divider" style="background:${theme.dividerColor};"></div>
 
         <div class="rewards-coins-section" onclick="openExchange()">
           <div class="rewards-coins-head">
-            <span class="rewards-coins-label">Coins</span>
-            <span class="chevron">›</span>
+            <span class="rewards-coins-label" style="color:${theme.subTextColor};text-shadow:0 1px 2px rgba(0,0,0,0.3);">Coins</span>
+            <span class="chevron" style="color:${theme.subTextColor};">›</span>
           </div>
           <div class="rewards-coins-val">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;flex-shrink:0;">
@@ -562,7 +707,7 @@ function home() {
                 </linearGradient>
               </defs>
             </svg>
-            <span class="rewards-coins-count">${state.coins ? coinFmt(state.coins) : '0'}</span>
+            <span class="rewards-coins-count" style="color:${theme.textColor};text-shadow:0 1px 3px rgba(0,0,0,0.45);">${state.coins ? coinFmt(state.coins) : '0'}</span>
           </div>
         </div>
       </div>
@@ -570,7 +715,7 @@ function home() {
     
     <section class="actions">
       <!-- Both Exchange and Withdraw open the same Exchange page as requested -->
-      <button class="btn primary" onclick="openExchange()">${state.toolbox.walletMode === 'transfer' ? 'Transfer' : state.toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge'}</button>
+      <button class="btn primary" onclick="openExchange()" style="background:${theme.btnGradient};box-shadow:${theme.btnShadow};color:${theme.btnTextColor};border:none;">${state.toolbox.walletMode === 'transfer' ? 'Transfer' : state.toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge'}</button>
       <button class="btn secondary" onclick="openExchange()">Withdraw</button>
       <div class="limit-row">
         <span class="limit-label">Daily withdrawal limit (Remain/Total)</span>

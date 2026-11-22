@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { coinFmt, fmt, getCurSym } from '../../utils/formatters';
 import Button from '../common/Button';
+import { TikTokCoinIcon } from '../common/Coin';
 
 export default function CustomKeypadSheet({
   isOpen,
@@ -61,8 +62,8 @@ export default function CustomKeypadSheet({
         </div>
         <div className="number">
           <div className="caption">Number of Coins</div>
-          <div className="number-row">
-            <span>🪙</span>&nbsp;<span id="num">{coinFmt(currentCoins)}</span>
+          <div className="number-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <TikTokCoinIcon size={24} />&nbsp;<span id="num">{coinFmt(currentCoins)}</span>
             <span className="all" onClick={handleAll}>All</span>
           </div>
           <div className="amount" id="customAmount">
@@ -85,7 +86,7 @@ export default function CustomKeypadSheet({
           </div>
           <div className="total">
             <span>Total</span>
-            <strong id="customTotal">€{fmt((currentCoins * 39.35) / 3500)}</strong>
+            <strong id="customTotal">{getCurSym(currency)}{fmt((currentCoins * 39.35) / 3500)}</strong>
           </div>
           <Button
             id="customDoneBtn"

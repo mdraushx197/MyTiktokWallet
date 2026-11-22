@@ -79,13 +79,14 @@ export function WalletProvider({ children }) {
   const abortCtrlRef = useRef(null);
 
   // Top notification trigger
-  const showTopNotification = (msg) => {
+  const showTopNotification = (msg, title = 'LIVE rewards') => {
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
-    setNotification(prev => ({
-      ...prev,
+    setNotification({
       visible: true,
-      message: msg || prev.message
-    }));
+      title: title || 'LIVE rewards',
+      message: msg || 'Successfully sent coins to recipient',
+      time: 'now'
+    });
     notifTimerRef.current = setTimeout(() => {
       setNotification(prev => ({ ...prev, visible: false }));
     }, 4500);
@@ -261,6 +262,8 @@ export function WalletProvider({ children }) {
     setLastTx(tx);
     setTransactions(prev => [tx, ...prev]);
 
+    const notifMsg = `Successfully sent ${coinFmt(selectedCoins)} Coins to @${recipient.username || clean}`;
+
     if (toolbox.paymentLoading.enabled) {
       setLoadingOverlay({
         visible: true,
@@ -270,11 +273,11 @@ export function WalletProvider({ children }) {
       setTimeout(() => {
         setLoadingOverlay(prev => ({ ...prev, visible: false }));
         setScreen('success');
-        showTopNotification();
+        showTopNotification(notifMsg, 'LIVE rewards');
       }, toolbox.paymentLoading.duration * 1000);
     } else {
       setScreen('success');
-      showTopNotification();
+      showTopNotification(notifMsg, 'LIVE rewards');
     }
   };
 

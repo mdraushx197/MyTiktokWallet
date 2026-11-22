@@ -5,6 +5,7 @@ import Button from '../components/common/Button';
 import RewardsCards from '../components/home/RewardsCards';
 import BalanceDisplay from '../components/home/BalanceDisplay';
 import TransactionList from '../components/home/TransactionList';
+import { getThemeById } from '../data/themes';
 
 export default function HomeScreen() {
   const {
@@ -19,10 +20,12 @@ export default function HomeScreen() {
     setScreen
   } = useWallet();
 
+  const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
+
   return (
-    <div className="screen">
+    <div className="screen" style={{ background: currentTheme.pageBg }}>
       {/* Topbar: < opens Toolbox, LIVE rewards centered, X does nothing */}
-      <header className="home-topbar">
+      <header className="home-topbar" style={{ background: 'transparent' }}>
         <button
           type="button"
           className="icon"
@@ -54,7 +57,17 @@ export default function HomeScreen() {
       />
 
       <section className="actions">
-        <Button variant="primary" onClick={openExchange}>
+        {/* User requirement: "keep the all recharge button red" */}
+        <Button
+          variant="primary"
+          onClick={openExchange}
+          style={{
+            background: 'var(--red)',
+            color: '#ffffff',
+            boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)',
+            border: 'none'
+          }}
+        >
           {toolbox.walletMode === 'transfer' ? 'Transfer' : toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge'}
         </Button>
         <Button variant="secondary" onClick={openExchange} style={{ marginTop: 8 }}>

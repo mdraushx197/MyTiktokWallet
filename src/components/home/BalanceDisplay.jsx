@@ -70,7 +70,7 @@ export default function BalanceDisplay({
         className={`rewards-dark-card ${currentTheme.isGlitter ? 'has-glitter' : ''}`}
         style={{
           background: currentTheme.cardGradient,
-          boxShadow: `0 10px 30px ${currentTheme.accentColor}33, 0 2px 10px rgba(0,0,0,0.3)`
+          boxShadow: currentTheme.cardShadow || `0 10px 30px ${currentTheme.accentColor}33, 0 2px 10px rgba(0,0,0,0.3)`
         }}
       >
         {/* Subtle TikTok Watermark Logo Silhouette */}
@@ -92,7 +92,7 @@ export default function BalanceDisplay({
             />
           </div>
           <div className="rewards-profile-info">
-            <div className="rewards-profile-name">Apex</div>
+            <div className="rewards-profile-name" style={{ color: currentTheme.textColor, textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}>Apex</div>
             <div className="rewards-level-badge" title="Apex Gifter Level 50">
               <ApexLevel50Diamond size={19} />
               <span className="rewards-level-badge-num">50</span>
@@ -101,17 +101,18 @@ export default function BalanceDisplay({
         </div>
 
         {/* Card Header Label */}
-        <div className="rewards-card-header">LIVE rewards</div>
+        <div className="rewards-card-header" style={{ color: currentTheme.subTextColor, textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>LIVE rewards</div>
 
         {/* Amount Row: Dynamic Currency + Number */}
         <div className="rewards-amount-row">
           <div className="rewards-amount-left">
-            <span className="rewards-cur-badge">{currency || 'USD'}</span>
+            <span className="rewards-cur-badge" style={{ color: currentTheme.textColor, textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}>{currency || 'USD'}</span>
             <span
               className="rewards-big-num"
               id="homeBigBalance"
               style={{
-                color: isAnimating ? '#fe2c55' : '#ffffff',
+                color: isAnimating ? '#fe2c55' : currentTheme.textColor,
+                textShadow: '0 1px 3px rgba(0,0,0,0.45)',
                 transition: isAnimating ? 'none' : 'color 0.4s ease'
               }}
             >
@@ -121,17 +122,17 @@ export default function BalanceDisplay({
         </div>
 
         {/* Divider */}
-        <div className="rewards-card-divider" />
+        <div className="rewards-card-divider" style={{ background: currentTheme.dividerColor }} />
 
-        {/* Spacious Coins Section (Others removed, full width with larger coin display) */}
+        {/* Spacious Coins Section */}
         <div className="rewards-coins-section" onClick={onRecharge}>
           <div className="rewards-coins-head">
-            <span className="rewards-coins-label">Coins</span>
-            <span className="chevron">›</span>
+            <span className="rewards-coins-label" style={{ color: currentTheme.subTextColor, textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>Coins</span>
+            <span className="chevron" style={{ color: currentTheme.subTextColor }}>›</span>
           </div>
           <div className="rewards-coins-val">
             <TikTokCoinIcon size={24} />
-            <span className="rewards-coins-count">
+            <span className="rewards-coins-count" style={{ color: currentTheme.textColor, textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}>
               {displayCoins ? coinFmt(displayCoins) : '0'}
             </span>
           </div>
