@@ -1,5 +1,11 @@
 # MyTiktokWallet
 
+## Live website
+
+[Visit the live website](https://velvety-narwhal-6de3d8.netlify.app/)
+
+Hosted on Netlify. This deployment was uploaded from the production `dist` build; future GitHub pushes do not automatically redeploy it. Build with `npm run build` and upload the updated `dist` folder to Netlify to publish changes.
+
 A modern, responsive React web application simulating TikTok LIVE Rewards, Creator Coins recharge, and creator profile interactions with customizable themes and iOS-style notifications.
 
 ## Features
