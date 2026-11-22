@@ -21,9 +21,13 @@ function MainRouter() {
         '--theme-page-bg': currentTheme.pageBg,
         '--theme-card-grad': currentTheme.cardGradient,
         '--theme-card-shadow': currentTheme.cardShadow,
+        '--theme-text': currentTheme.textColor,
+        '--theme-subtext': currentTheme.subTextColor,
+        '--theme-border': currentTheme.dividerColor,
         background: currentTheme.pageBg,
+        color: currentTheme.textColor,
         minHeight: '100vh',
-        transition: 'background 0.4s ease'
+        transition: 'background 0.4s ease, color 0.4s ease'
       }}
     >
       <NotificationBanner

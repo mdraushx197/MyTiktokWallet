@@ -13,7 +13,8 @@ export default function ExchangeConfirmModal({
 }) {
   if (!isOpen) return null;
 
-  const amountStr = moneyFmt(dollars(selectedCoins), currency);
+  const coinsToExchange = selectedCoins > 0 ? selectedCoins : 350;
+  const amountStr = moneyFmt(dollars(coinsToExchange), currency);
   const titleText = confirmTitle ? `Complete ${confirmTitle.toLowerCase()}?` : `Complete ${actionTitle.toLowerCase()}?`;
   const btnText = actionTitle || confirmTitle || 'Recharge';
 

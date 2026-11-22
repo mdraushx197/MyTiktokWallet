@@ -25,21 +25,23 @@ export default function HomeScreen() {
   return (
     <div className="screen" style={{ background: currentTheme.pageBg }}>
       {/* Topbar: < opens Toolbox, LIVE rewards centered, X does nothing */}
-      <header className="home-topbar" style={{ background: 'transparent' }}>
+      <header className="home-topbar" style={{ background: 'transparent', borderBottom: `1px solid ${currentTheme.dividerColor}` }}>
         <button
           type="button"
           className="icon"
           onClick={() => setScreen('toolbox')}
           title="Settings"
+          style={{ color: currentTheme.textColor }}
         >
           ‹
         </button>
-        <h2 className="home-title">LIVE rewards</h2>
+        <h2 className="home-title" style={{ color: currentTheme.textColor }}>LIVE rewards</h2>
         <button
           type="button"
           className="icon home-close-btn"
           title="Close"
           onClick={() => { }}
+          style={{ color: currentTheme.textColor }}
         >
           ×
         </button>
@@ -64,18 +66,28 @@ export default function HomeScreen() {
           style={{
             background: 'var(--red)',
             color: '#ffffff',
-            boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)',
+            boxShadow: '0 4px 16px rgba(254, 44, 85, 0.45)',
             border: 'none'
           }}
         >
           {toolbox.walletMode === 'transfer' ? 'Transfer' : toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge'}
         </Button>
-        <Button variant="secondary" onClick={openExchange} style={{ marginTop: 8 }}>
+        <Button
+          variant="secondary"
+          onClick={openExchange}
+          style={{
+            marginTop: 8,
+            background: 'rgba(255, 255, 255, 0.12)',
+            color: currentTheme.textColor,
+            border: `1px solid ${currentTheme.dividerColor}`,
+            backdropFilter: 'blur(8px)'
+          }}
+        >
           Withdraw
         </Button>
         <div className="limit-row">
-          <span className="limit-label">Daily withdrawal limit (Remain/Total)</span>
-          <span className="limit-value">
+          <span className="limit-label" style={{ color: currentTheme.subTextColor }}>Daily withdrawal limit (Remain/Total)</span>
+          <span className="limit-value" style={{ color: currentTheme.textColor }}>
             {moneyFmt(1000, toolbox.currency)}/{moneyFmt(1000, toolbox.currency)}
           </span>
         </div>

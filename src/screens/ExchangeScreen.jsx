@@ -34,43 +34,51 @@ export default function ExchangeScreen() {
 
   const currentTheme = getThemeById(toolbox.theme || 'glitter-shimmer');
   const clean = cleanHandle(username, toolbox.autoAtRemove);
-  const canExchange = Boolean(clean && selectedCoins > 0);
+  const hasUser = Boolean(clean && clean.length > 0);
   const actionTitle = toolbox.walletMode === 'transfer' ? 'Transfer' : toolbox.walletMode === 'exchange' ? 'Exchange' : 'Recharge';
 
   const handleExchangeClick = () => {
-    // If not ready, do nothing (no popup)
-    if (!canExchange) return;
+    if (!clean) {
+      showTopNotification('Please enter a creator username first');
+      return;
+    }
+    // Auto-default to 350 Coins if none selected yet
+    if (!selectedCoins || selectedCoins <= 0) {
+      setSelectedCoins(350);
+    }
     setShowExchangeModal(true);
   };
 
   return (
     <div className="screen" style={{ background: currentTheme.pageBg }}>
-      <header className="topbar" style={{ background: 'transparent' }}>
+      <header className="topbar" style={{ background: 'transparent', borderBottom: `1px solid ${currentTheme.dividerColor}` }}>
         <button
           type="button"
           className="icon"
           onClick={() => setScreen('home')}
+          style={{ color: currentTheme.textColor }}
         >
           ‹
         </button>
-        <h2>{actionTitle}</h2>
+        <h2 style={{ color: currentTheme.textColor }}>{actionTitle}</h2>
         <span
           className="icon icon-passive"
           aria-hidden="true"
           onClick={(e) => e.preventDefault()}
+          style={{ color: currentTheme.textColor }}
         >
           ?
         </span>
       </header>
 
       <div className="exchange">
-        <div className="big" id="exchangeBalance">
+        <div className="big" id="exchangeBalance" style={{ color: currentTheme.textColor }}>
           {moneyFmt(balance, toolbox.currency)}
         </div>
-        <div className="conversion" id="exchangeCoins">
+        <div className="conversion" id="exchangeCoins" style={{ color: currentTheme.subTextColor }}>
           = {moneyFmt(balance, toolbox.currency)} ( <TikTokCoinIcon size={16} /> {coinFmt(coins)} )
         </div>
-        <div className="label" style={{ marginTop: 24 }}>
+        <div className="label" style={{ marginTop: 24, color: currentTheme.subTextColor }}>
           Available balance to exchange for Coins
         </div>
 
@@ -78,6 +86,7 @@ export default function ExchangeScreen() {
           username={username}
           onChange={handleUsernameChange}
           onClear={clearUsername}
+          onSubmitImmediate={handleExchangeClick}
         />
 
         <div id="profileContainer">
@@ -100,19 +109,21 @@ export default function ExchangeScreen() {
         />
       </div>
 
-      <div className="sticky">
-        {/* User requirement: "keep the all recharge button red" */}
+      <div className="sticky" style={{ background: 'transparent' }}>
+        {/* User requirement: "keep the all recharge button red" & active upon typing username */}
         <Button
           id="exchangeSubmitBtn"
           variant="primary"
-          disabled={!canExchange}
+          disabled={!hasUser}
           onClick={handleExchangeClick}
-          style={canExchange ? {
+          style={{
             background: 'var(--red)',
             color: '#ffffff',
-            boxShadow: '0 4px 14px rgba(254, 44, 85, 0.35)',
-            border: 'none'
-          } : {}}
+            boxShadow: hasUser ? '0 4px 16px rgba(254, 44, 85, 0.45)' : 'none',
+            border: 'none',
+            opacity: hasUser ? 1 : 0.45,
+            cursor: hasUser ? 'pointer' : 'not-allowed'
+          }}
         >
           {actionTitle}
         </Button>

@@ -283,7 +283,7 @@ export function WalletProvider({ children }) {
 
   const openExchange = () => {
     setUsername('');
-    setSelectedCoins(0);
+    setSelectedCoins(350); // Pre-select popular 350 coins ($3.95)
     setProfile(null);
     setProfileLoading(false);
     setProfileError(null);
