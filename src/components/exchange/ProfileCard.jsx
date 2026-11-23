@@ -71,10 +71,10 @@ export default function ProfileCard({
           <div className="puser">@{profile.username}</div>
           <div className="stats-chips">
             <div className="stat-pill" style={{ fontSize: chipFontSize }}>
-              👥 <strong>{numFmt(profile.followers)}</strong> Followers
+              👥 <strong title={profile.followers?.toLocaleString('en-US')}>{profile.followers == null ? 'Unavailable' : numFmt(profile.followers)}</strong> Followers
             </div>
             <div className="stat-pill" style={{ fontSize: chipFontSize }}>
-              ❤️ <strong>{numFmt(profile.likes)}</strong> Likes
+              ❤️ <strong title={profile.likes?.toLocaleString('en-US')}>{profile.likes == null ? 'Unavailable' : numFmt(profile.likes)}</strong> Likes
             </div>
           </div>
         </div>

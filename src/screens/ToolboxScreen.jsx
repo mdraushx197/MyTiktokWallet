@@ -231,23 +231,7 @@ export default function ToolboxScreen() {
               <span className="ios-slider" />
             </label>
           </div>
-          <div className="toolbox-divider" />
-          <div className="toolbox-toggle-row">
-            <div>
-              <div className="toolbox-label">Random profile for unknown ID</div>
-              <div className="toolbox-sub" style={{ marginBottom: 0 }}>
-                When TikTok has no account for the ID, show a random picture and name instead of an error
-              </div>
-            </div>
-            <label className="ios-switch">
-              <input
-                type="checkbox"
-                checked={toolbox.randomProfileForUnknown}
-                onChange={(e) => updateSetting('randomProfileForUnknown', e.target.checked)}
-              />
-              <span className="ios-slider" />
-            </label>
-          </div>
+          <div className="toolbox-sub" style={{ marginTop: 16 }}>Profile search uses live provider data. Failed searches show an error; generated profiles are not used.</div>
         </div>
 
         {/* Titles and labels */}

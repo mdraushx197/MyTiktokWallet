@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { cleanHandle, coinFmt, dollars, moneyFmt, rate } from '../utils/formatters';
-import { findClosestCreator, getRandomProfile, typoAliases, CREATOR_DATABASE } from '../data/creators';
+import { mapTikTokProfile } from '../utils/tiktokProfile';
 
 const WalletContext = createContext();
 
@@ -44,7 +44,6 @@ export function WalletProvider({ children }) {
     transactionDetailsStyle: 'current',
     successButtonPosition: 'up',
     autoAtRemove: true,
-    randomProfileForUnknown: true,
     confirmWithdrawalTitle: 'Transfer details',
     transferDetailsTitle: 'Transfer details',
     transferLabel: 'LIVE rewards transfer to TikTok',
@@ -111,74 +110,42 @@ export function WalletProvider({ children }) {
     }, 2000);
   };
 
-  // Profile lookup with TikTok API & fallback
+  // Only successful provider responses are shown as real profile data.
   const fetchProfile = async (rawInput) => {
-    const clean = cleanHandle(rawInput, toolbox.autoAtRemove);
+    const clean = cleanHandle(rawInput);
     if (!clean) return;
-
-    if (abortCtrlRef.current) abortCtrlRef.current.abort();
-    abortCtrlRef.current = new AbortController();
-
+    abortCtrlRef.current?.abort();
+    const controller = new AbortController();
+    abortCtrlRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
     try {
-      const res = await fetch(`https://api.nftoken.info/api/tiktok/profile/${encodeURIComponent(clean)}`, {
-        signal: abortCtrlRef.current.signal,
+      const res = await fetch(`/api/tiktok/profile/${encodeURIComponent(clean)}`, {
+        signal: controller.signal,
         headers: { Accept: 'application/json' }
       });
-
-      if (!res.ok) throw new Error('Network error');
-      const data = await res.json();
-
-      if (data && data.status === 'success' && data.data) {
-        const d = data.data;
-        const mapped = {
-          username: d.uniqueId || d.username || clean,
-          nickname: d.nickname || d.uniqueId || clean,
-          avatar: d.avatarLarger || d.avatarMedium || d.avatarThumb || '',
-          followers: d.followerCount || d.followers || 0,
-          likes: d.heartCount || d.heart || d.likes || 0,
-          verified: Boolean(d.verified)
-        };
-        profileCache.current.set(clean.toLowerCase(), { profile: mapped, error: null });
-        setProfile(mapped);
-        setProfileLoading(false);
-        setProfileError(null);
-      } else {
-        handleProfileNotFound(clean, data?.error);
-      }
+      if (!res.ok) throw new Error('Profile service is unavailable. Please try again.');
+      const mapped = mapTikTokProfile(await res.json());
+      if (controller !== abortCtrlRef.current || controller.signal.aborted) return;
+      profileCache.current.set(clean.toLowerCase(), { profile: mapped, expires: Date.now() + 60000 });
+      setProfile(mapped);
+      setProfileError(null);
     } catch (err) {
-      if (err.name === 'AbortError') return;
-      handleProfileNotFound(clean, null);
-    }
-  };
-
-  const handleProfileNotFound = (clean, apiErr) => {
-    // Check if the handle matches a known creator in our database
-    const exact = CREATOR_DATABASE.find(
-      c => c.username.toLowerCase() === clean.toLowerCase() ||
-           c.nickname.toLowerCase() === clean.toLowerCase()
-    );
-    if (exact) {
-      profileCache.current.set(clean.toLowerCase(), { profile: exact, error: null });
-      setProfile(exact);
-      setProfileLoading(false);
-      setProfileError(null);
-      return;
-    }
-
-    if (toolbox.randomProfileForUnknown) {
-      const closest = findClosestCreator(clean);
-      profileCache.current.set(clean.toLowerCase(), { profile: closest, error: null });
-      setProfile(closest);
-      setProfileLoading(false);
-      setProfileError(null);
-    } else {
-      const errMsg = apiErr || `User "@${clean}" not found on TikTok.`;
-      profileCache.current.set(clean.toLowerCase(), { profile: null, error: errMsg });
+      if (controller !== abortCtrlRef.current) return;
       setProfile(null);
-      setProfileLoading(false);
-      setProfileError(errMsg);
+      setProfileError(err.name === 'AbortError'
+        ? 'Profile lookup timed out. Please try again.'
+        : err.message);
+    } finally {
+      clearTimeout(timeout);
+      if (controller === abortCtrlRef.current) setProfileLoading(false);
     }
   };
+
+  useEffect(() => () => {
+    clearTimeout(debounceTimerRef.current);
+    abortCtrlRef.current?.abort();
+    abortCtrlRef.current = null;
+  }, []);
 
   const handleUsernameChange = (val) => {
     let processed = val;
@@ -202,10 +169,10 @@ export function WalletProvider({ children }) {
     }
 
     const cacheKey = clean.toLowerCase();
-    if (profileCache.current.has(cacheKey)) {
+    if (profileCache.current.get(cacheKey)?.expires > Date.now()) {
       const cached = profileCache.current.get(cacheKey);
       setProfile(cached.profile);
-      setProfileError(cached.error);
+      setProfileError(null);
       setProfileLoading(false);
       return;
     }
@@ -230,6 +197,7 @@ export function WalletProvider({ children }) {
     setProfileError(null);
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     if (abortCtrlRef.current) abortCtrlRef.current.abort();
+    abortCtrlRef.current = null;
   };
 
   const selectPack = (amount) => {
@@ -238,6 +206,10 @@ export function WalletProvider({ children }) {
 
   // Execute exchange
   const executeExchange = () => {
+    if (!profile || profileLoading || profileError) {
+      showTopNotification('Look up a valid creator profile before confirming.');
+      return;
+    }
     setShowExchangeModal(false);
     const clean = cleanHandle(username, toolbox.autoAtRemove);
     const amount = dollars(selectedCoins);
@@ -248,7 +220,7 @@ export function WalletProvider({ children }) {
 
     setLastDeduction({ startBalance, endBalance, startCoins, endCoins, amount });
 
-    const recipient = profile || findClosestCreator(clean) || getRandomProfile(clean);
+    const recipient = profile;
     const now = new Date();
     const tx = {
       id: 'tx_' + Date.now(),
@@ -284,6 +256,9 @@ export function WalletProvider({ children }) {
   };
 
   const openExchange = () => {
+    clearTimeout(debounceTimerRef.current);
+    abortCtrlRef.current?.abort();
+    abortCtrlRef.current = null;
     setUsername('');
     setSelectedCoins(350); // Pre-select popular 350 coins ($3.95)
     setProfile(null);

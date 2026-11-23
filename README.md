@@ -16,7 +16,7 @@ A modern, responsive React web application simulating TikTok LIVE Rewards, Creat
   - Animated balance deduction when sending coins.
   - Authentic yellowish-gold TikTok coin icons (`TikTokCoinIcon`).
 - **Recharge & Creator Exchange**:
-  - Live TikTok Creator search with live API data (`followers`, `likes`).
+  - TikTok creator search via the FollowersGainer profile endpoint, proxied through Vite locally and Netlify in production. Shows provider-returned name, username, avatar, followers and likes; unavailable accounts show errors instead of generated data.
   - Strict verification badge logic: only genuine verified creators display the blue badge.
   - Preset coin packages (30, 350, 700, 1400, 3500) and custom keypad input.
 - **9 Revolut-Inspired Luxury Theme Tiers**:

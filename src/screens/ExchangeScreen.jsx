@@ -43,6 +43,10 @@ export default function ExchangeScreen() {
       showTopNotification('Please enter a creator username first');
       return;
     }
+    if (!profile || profileLoading || profileError) {
+      showTopNotification('Wait for a valid creator profile before continuing.');
+      return;
+    }
     // Auto-default to 350 Coins if none selected yet
     if (!selectedCoins || selectedCoins <= 0) {
       setSelectedCoins(350);
@@ -115,7 +119,7 @@ export default function ExchangeScreen() {
         <Button
           id="exchangeSubmitBtn"
           variant="primary"
-          disabled={!hasUser}
+          disabled={!hasUser || !profile || profileLoading || Boolean(profileError)}
           onClick={handleExchangeClick}
           style={{
             background: 'var(--red)',
