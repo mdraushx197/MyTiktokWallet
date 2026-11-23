@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mytiktokwallet
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    routes:
+      - type: rewrite
+        source: /api/tiktok/*
+        destination: https://transfer.followersgainer.com/api/tiktok/*

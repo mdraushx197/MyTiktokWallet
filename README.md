@@ -2,7 +2,11 @@
 
 ## Live website
 
-[Visit the live website](https://velvety-narwhal-6de3d8.netlify.app/)
+[Visit the live website](https://mytiktokwallet.onrender.com/)
+
+Hosted on Render as a static site from the `main` branch. Build command: `npm ci && npm run build`; publish directory: `dist`; Node.js: `22`. The `/api/tiktok/*` rewrite proxies profile and avatar requests to `https://transfer.followersgainer.com/api/tiktok/*`. These settings are also recorded in `render.yaml`. The current service was imported as a public Git repository and requires a manual deploy to publish new commits.
+
+[Previous Netlify website](https://velvety-narwhal-6de3d8.netlify.app/)
 
 Hosted on Netlify. This deployment was uploaded from the production `dist` build; future GitHub pushes do not automatically redeploy it. Build with `npm run build` and upload the updated `dist` folder to Netlify to publish changes.
 
