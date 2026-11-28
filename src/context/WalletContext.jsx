@@ -41,7 +41,7 @@ export function WalletProvider({ children }) {
   const [toolbox, setToolbox] = useState({
     walletMode: 'coins',
     exchangeCompleteStyle: 'green',
-    transactionDetailsStyle: 'current',
+    transactionDetailsStyle: 'receipt',
     successButtonPosition: 'up',
     autoAtRemove: true,
     confirmWithdrawalTitle: 'Transfer details',

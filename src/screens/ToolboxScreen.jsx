@@ -176,7 +176,7 @@ export default function ToolboxScreen() {
           <div className="toolbox-sub">Choose the summary shown after confirmation</div>
           <div className="toolbox-btn-group grid-2">
             {[['current', 'Current summary'], ['receipt', 'Transaction details']].map(([value, label]) => (
-              <button type="button" key={value} className={`tb-btn ${(toolbox.transactionDetailsStyle || 'current') === value ? 'active' : ''}`} aria-pressed={(toolbox.transactionDetailsStyle || 'current') === value} onClick={() => updateSetting('transactionDetailsStyle', value)}>{label}</button>
+              <button type="button" key={value} className={`tb-btn ${(toolbox.transactionDetailsStyle || 'receipt') === value ? 'active' : ''}`} aria-pressed={(toolbox.transactionDetailsStyle || 'receipt') === value} onClick={() => updateSetting('transactionDetailsStyle', value)}>{label}</button>
             ))}
           </div>
         </div>

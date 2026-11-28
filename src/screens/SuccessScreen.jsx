@@ -34,7 +34,7 @@ export default function SuccessScreen() {
     </Button>
   );
 
-  if (toolbox.transactionDetailsStyle === 'receipt') {
+  if ((toolbox.transactionDetailsStyle || 'receipt') === 'receipt') {
     const copyTransactionId = async () => {
       try {
         await navigator.clipboard.writeText(lastTx.id);

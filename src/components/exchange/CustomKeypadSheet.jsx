@@ -81,7 +81,7 @@ export default function CustomKeypadSheet({
               </button>
             ))}
           </div>
-          <div className="policy" onClick={() => alert('Virtual Items Policy')}>
+          <div className="policy">
             Virtual Items Policy
           </div>
           <div className="total">
